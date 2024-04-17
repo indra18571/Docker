@@ -32,12 +32,16 @@ module "public-subnets" {
 
 
 module "input-ec2" {
-  source = "./modules/infra/pre-ec2"
+  source   = "./modules/infra/pre-ec2"
   key-name = var.key-name
 }
 
+module "iam-profile" {
+  source = "./modules/infra/iam-prof"
+}
+
 module "instances" {
-  depends_on    = [module.public-subnets, module.cw-profile, module.input-ec2]
+  depends_on    = [module.public-subnets, module.input-ec2]
   for_each      = module.public-subnets
   source        = "./modules/infra/ec2"
   subnet-id     = each.value["subnet-id"]
@@ -47,12 +51,12 @@ module "instances" {
   instance-type = var.instance-type
   key-name      = var.key-name
   sg-id         = module.vpc.public-sg-id
-  profile-name  = module.cw-profile.iam-instance-profile-name
+  profile-name  = module.iam-profile.iam-instance-profile-name
 }
 
 
 
-
+//https://medium.com/appgambit/part-1-running-docker-on-aws-ec2-cbcf0ec7c3f8
 
 
 

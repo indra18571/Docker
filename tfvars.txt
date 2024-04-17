@@ -18,13 +18,15 @@ public-subnets = {
     name = "infra-public1"
     cidr = "10.0.2.0/24"
     az   = "eu-west-2a"
-  },
+  }
+  /*
+  ,
   subnet2 = {
     name = "infra-public2"
     cidr = "10.0.3.0/24"
     az   = "eu-west-2b"
   }
-  
+  */
 }
 
 
